@@ -1,2 +1,2 @@
 # pensieve
-Small python CLI that store spontaneous memories in an SQLite database
+Small python CLI that stores spontaneous memories in an SQLite database
