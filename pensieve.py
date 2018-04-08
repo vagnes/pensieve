@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 import argparse
 import datetime
 import sys
@@ -47,8 +45,6 @@ def create_table():
 	c.execute('CREATE TABLE IF NOT EXISTS pensieve(datestamp TEXT, memory TEXT)')
 
 def single_data_entry(sMemory):
-	if sMemory is None:
-		quit()
 	sUnix = time.time()
 	sDate = str(datetime.datetime.fromtimestamp(sUnix).strftime('%Y-%m-%d %H:%M:%S'))
 	c.execute("INSERT INTO pensieve (datestamp, memory) VALUES (?, ?)",
@@ -95,4 +91,4 @@ if __name__ == "__main__":
 	elif nNumber_memory:
 		number_memory_retrieval(nNumber_memory)
 	else:
-		single_data_entry(sMemory = None)
+		single_data_entry(sMemory)
