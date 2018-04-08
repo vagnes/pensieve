@@ -1,5 +1,8 @@
+#!/usr/bin/python3
+
 import argparse
 import datetime
+import sys
 import sqlite3
 import time
 
@@ -20,6 +23,11 @@ parser.add_argument(
 	"-n", "--number", metavar="int", type=int,
 	help="Number of memories to retrieve.")
 args = parser.parse_args()
+
+if len(sys.argv)==1:
+    parser.print_help(sys.stderr)
+    sys.exit(1)
+args=parser.parse_args()
 
 # SQLite setup
 
