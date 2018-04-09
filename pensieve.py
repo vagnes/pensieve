@@ -22,6 +22,9 @@ parser.add_argument(
 parser.add_argument(
 	"-n", "--number", metavar="int", type=int,
 	help="Number of memories to retrieve.")
+parser.add_argument(
+	"--reset", action="store_true",
+	help="Resets the database.")
 args = parser.parse_args()
 
 if len(sys.argv)==1:
@@ -38,6 +41,7 @@ except TypeError as e:
 
 bCont_mode = args.continous
 bRetrieve_memory = args.retrieve
+bReset_database = args.reset
 nNumber_memory = args.number
 
 conn = sqlite3.connect('pensieve.db')
@@ -45,6 +49,18 @@ c = conn.cursor()
 
 def create_table():
 	c.execute('CREATE TABLE IF NOT EXISTS pensieve(datestamp TEXT, memory TEXT)')
+
+def reset_table():
+	reset = input("Are you sure you want to delete the database?(y/n)\n> ")
+	if reset == "y":
+		c.execute('DROP TABLE pensieve')
+		c.execute('CREATE TABLE pensieve(datestamp TEXT, memory TEXT)')
+		print("::database reset::")
+	elif reset == "n":
+		print("Nothing deleted.")
+		quit()
+	else:
+		print("Not a valid option. Nothing deleted.")
 
 def single_data_entry(sMemory):
 	sUnix = time.time()
@@ -92,5 +108,7 @@ if __name__ == "__main__":
 		single_memory_retrieval()
 	elif nNumber_memory:
 		number_memory_retrieval(nNumber_memory)
+	elif bReset_database:
+		reset_table()
 	else:
 		single_data_entry(sMemory)
